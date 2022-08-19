@@ -56,13 +56,13 @@
 		D3F3E1EA261E22BC008E7795 /* PenguinPet */ = {
 			isa = PBXGroup;
 			children = (
-				D3F3E1EB261E22BC008E7795 /* PenguinPetApp.swift */,
-				D3F3E1ED261E22BC008E7795 /* ContentView.swift */,
 				D3F3E1EF261E22BE008E7795 /* Assets.xcassets */,
-				D3F3E1F4261E22BE008E7795 /* Info.plist */,
-				D3F3E1F1261E22BE008E7795 /* Preview Content */,
 				890F117B28AFC71A009E2137 /* AudioBox.swift */,
 				890F117D28AFC907009E2137 /* AudioStatus.swift */,
+				D3F3E1ED261E22BC008E7795 /* ContentView.swift */,
+				D3F3E1F4261E22BE008E7795 /* Info.plist */,
+				D3F3E1EB261E22BC008E7795 /* PenguinPetApp.swift */,
+				D3F3E1F1261E22BE008E7795 /* Preview Content */,
 			);
 			path = PenguinPet;
 			sourceTree = "<group>";
