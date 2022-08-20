@@ -10,6 +10,10 @@ import AVFoundation
 
 struct ContentView: View {
     
+    @ObservedObject var audioBox = AudioBox()
+    @State var hasMicAccess = false
+    @State var displayNotification = false
+    
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -34,8 +38,17 @@ struct ContentView: View {
                                     HStack {
                                         Button {
                                             // record audio
+                                            if audioBox.status == .stopped {
+                                                if hasMicAccess {
+                                                    audioBox.record()
+                                                } else {
+                                                    requestMicrophoneAccess()
+                                                }
+                                            } else {
+                                                audioBox.stopRecording()
+                                            }
                                         } label: {
-                                            Image("button-record-inactive")
+                                            Image(audioBox.status == .recording ? "button-play-active": "button-record-inactive")
                                         }
                                         Button {
                                             // play audio
@@ -51,7 +64,27 @@ struct ContentView: View {
                         }
                     }
                 }
+                .onAppear {
+                    audioBox.setupRecorder()
+                }
+                .alert(isPresented: $displayNotification) {
+                    Alert(title: Text("Requires Microphone Access"),
+                          message: Text("Go to Settings > PenguinPet > Allow PenguinPet to Access Microphone. \nSet switch to enable."),
+                          dismissButton: .default(Text("Ok")))
+                }
             }.navigationBarHidden(true)
+        }
+    }
+    
+    private func requestMicrophoneAccess() {
+        let session = AVAudioSession.sharedInstance()
+        session.requestRecordPermission { granted in
+            hasMicAccess = granted
+            if granted {
+                audioBox.record()
+            } else {
+                displayNotification = true
+            }
         }
     }
 }
