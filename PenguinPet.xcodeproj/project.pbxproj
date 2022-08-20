@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		890F117C28AFC71A009E2137 /* AudioBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890F117B28AFC71A009E2137 /* AudioBox.swift */; };
 		890F117E28AFC907009E2137 /* AudioStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890F117D28AFC907009E2137 /* AudioStatus.swift */; };
+		890F118028B0EFD4009E2137 /* MeterTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890F117F28B0EFD4009E2137 /* MeterTable.swift */; };
+		890F118228B0F37D009E2137 /* PenguinAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890F118128B0F37D009E2137 /* PenguinAnimator.swift */; };
 		D3F3E1EC261E22BC008E7795 /* PenguinPetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F3E1EB261E22BC008E7795 /* PenguinPetApp.swift */; };
 		D3F3E1EE261E22BC008E7795 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F3E1ED261E22BC008E7795 /* ContentView.swift */; };
 		D3F3E1F0261E22BE008E7795 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3F3E1EF261E22BE008E7795 /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* Begin PBXFileReference section */
 		890F117B28AFC71A009E2137 /* AudioBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBox.swift; sourceTree = "<group>"; };
 		890F117D28AFC907009E2137 /* AudioStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioStatus.swift; sourceTree = "<group>"; };
+		890F117F28B0EFD4009E2137 /* MeterTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterTable.swift; sourceTree = "<group>"; };
+		890F118128B0F37D009E2137 /* PenguinAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenguinAnimator.swift; sourceTree = "<group>"; };
 		D3F3E1E8261E22BC008E7795 /* PenguinPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PenguinPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3F3E1EB261E22BC008E7795 /* PenguinPetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenguinPetApp.swift; sourceTree = "<group>"; };
 		D3F3E1ED261E22BC008E7795 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 				890F117D28AFC907009E2137 /* AudioStatus.swift */,
 				D3F3E1ED261E22BC008E7795 /* ContentView.swift */,
 				D3F3E1F4261E22BE008E7795 /* Info.plist */,
+				890F117F28B0EFD4009E2137 /* MeterTable.swift */,
+				890F118128B0F37D009E2137 /* PenguinAnimator.swift */,
 				D3F3E1EB261E22BC008E7795 /* PenguinPetApp.swift */,
 				D3F3E1F1261E22BE008E7795 /* Preview Content */,
 			);
@@ -145,7 +151,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3F3E1EE261E22BC008E7795 /* ContentView.swift in Sources */,
+				890F118028B0EFD4009E2137 /* MeterTable.swift in Sources */,
 				D3F3E1EC261E22BC008E7795 /* PenguinPetApp.swift in Sources */,
+				890F118228B0F37D009E2137 /* PenguinAnimator.swift in Sources */,
 				890F117E28AFC907009E2137 /* AudioStatus.swift in Sources */,
 				890F117C28AFC71A009E2137 /* AudioBox.swift in Sources */,
 			);

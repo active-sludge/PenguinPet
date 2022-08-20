@@ -14,6 +14,7 @@ class AudioBox: NSObject, ObservableObject {
     
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
+    let meterTable = MeterTable(tableSize: 100)
     
     var urlForMemo: URL {
         let fileManager = FileManager.default
@@ -81,34 +82,12 @@ class AudioBox: NSObject, ObservableObject {
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
-        
         do {
-            audioRecorder = try AVAudioRecorder(url: urlForMemo,
-                                                settings: recordSettings)
+            audioRecorder = try AVAudioRecorder(url: urlForMemo, settings: recordSettings)
             audioRecorder?.delegate = self
         } catch {
             print("Error creating audioRecorder")
         }
-    }
-    
-    func play() {
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: urlForMemo)
-        } catch {
-            print(error.localizedDescription)
-        }
-        guard let audioPlayer = audioPlayer else { return }
-        audioPlayer.delegate = self
-        
-        if audioPlayer.duration > 0.0 {
-            status = .playing
-            audioPlayer.play()
-        }
-    }
-    
-    func stopPlayback() {
-        audioPlayer?.stop()
-        status = .stopped
     }
     
     func record() {
@@ -120,6 +99,27 @@ class AudioBox: NSObject, ObservableObject {
         audioRecorder?.stop()
         status = .stopped
     }
+    
+    func play() {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: urlForMemo)
+        } catch {
+            print(error.localizedDescription)
+        }
+        guard let audioPlayer = audioPlayer else { return }
+        audioPlayer.delegate = self
+        if audioPlayer.duration > 0.0 {
+            audioPlayer.isMeteringEnabled = true
+            audioPlayer.play()
+            status = .playing
+        }
+    }
+    
+    func stopPlayback() {
+        audioPlayer?.stop()
+        status = .stopped
+    }
+    
 }
 
 extension AudioBox: AVAudioRecorderDelegate {
