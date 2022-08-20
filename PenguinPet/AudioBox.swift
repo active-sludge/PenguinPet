@@ -39,6 +39,26 @@ class AudioBox: NSObject, ObservableObject {
         }
     }
     
+    func play() {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: urlForMemo)
+        } catch {
+            print(error.localizedDescription)
+        }
+        guard let audioPlayer = audioPlayer else { return }
+        audioPlayer.delegate = self
+        
+        if audioPlayer.duration > 0.0 {
+            status = .playing
+            audioPlayer.play()
+        }
+    }
+    
+    func stopPlayback() {
+        audioPlayer?.stop()
+        status = .stopped
+    }
+    
     func record() {
         audioRecorder?.record()
         status = .recording
@@ -54,5 +74,10 @@ extension AudioBox: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         status = .stopped
     }
-    
+}
+
+extension AudioBox: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        status = .stopped
+    }
 }

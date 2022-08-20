@@ -52,8 +52,14 @@ struct ContentView: View {
                                         }
                                         Button {
                                             // play audio
+                                            if audioBox.status == .playing {
+                                                audioBox.stopPlayback()
+                                            } else {
+                                                audioBox.play()
+                                            }
                                         } label: {
-                                            Image( "button-play-inactive")
+                                            Image( audioBox.status == .playing ? "button-play-active" :
+                                                "button-play-inactive")
                                         }
                                     }
                                     .padding([.leading, .trailing])
