@@ -72,6 +72,12 @@ struct ContentView: View {
                                         } label: {
                                             Image(audioBox.status == .playing ? "button-play-active" : "button-play-inactive")
                                         }
+                                        NavigationLink(
+                                            destination: AudioSettings(audioBox: audioBox),
+                                            label: {
+                                                Image("button-settings")
+                                            })
+                                        .padding(.trailing)
                                     }
                                     .padding([.leading, .trailing])
                                 }
@@ -83,6 +89,7 @@ struct ContentView: View {
                 }
                 .onAppear {
                     audioBox.setupRecorder()
+                    audioBox.setupAudioEngine()
                 }
                 .alert(isPresented: $displayNotification) {
                     Alert(title: Text("Requires Microphone Access"), message: Text("Go to Settings > PenguinPet > Allow PenguinPet to Access Microphone.\nSet switch to enable."), dismissButton: .default(Text("OK")))

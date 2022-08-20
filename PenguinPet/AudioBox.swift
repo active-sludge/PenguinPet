@@ -15,6 +15,11 @@ class AudioBox: NSObject, ObservableObject {
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     let meterTable = MeterTable(tableSize: 100)
+    var audioAVEngine = AVAudioEngine()
+    var enginePlayer = AVAudioPlayerNode()
+    var pitchEffect = AVAudioUnitTimePitch()
+    var reverbEffect = AVAudioUnitReverb()
+    var engineAudioFile: AVAudioFile!
     
     var urlForMemo: URL {
         let fileManager = FileManager.default
@@ -32,6 +37,25 @@ class AudioBox: NSObject, ObservableObject {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    func setupAudioEngine() {
+        let format = audioAVEngine.inputNode.inputFormat(forBus: 0)
+        audioAVEngine.attach(enginePlayer)
+        audioAVEngine.attach(pitchEffect)
+        audioAVEngine.attach(reverbEffect)
+        audioAVEngine.connect(enginePlayer, to: pitchEffect, format: format)
+        audioAVEngine.connect(pitchEffect, to: reverbEffect, format: format)
+        audioAVEngine.connect(reverbEffect, to: audioAVEngine.outputNode, format: format)
+        reverbEffect.loadFactoryPreset(AVAudioUnitReverbPreset.largeChamber)
+        pitchEffect.pitch = 1.0
+        reverbEffect.wetDryMix = 50
+        
+        do {
+            try audioAVEngine.start()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     @objc func handleRouteChange(notification: Notification) {
@@ -75,6 +99,7 @@ class AudioBox: NSObject, ObservableObject {
         }
     }
     
+    
     func setupRecorder() {
         let recordSettings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
@@ -102,21 +127,33 @@ class AudioBox: NSObject, ObservableObject {
     
     func play() {
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: urlForMemo)
+            engineAudioFile = try AVAudioFile(forReading: urlForMemo)
         } catch {
             print(error.localizedDescription)
         }
-        guard let audioPlayer = audioPlayer else { return }
-        audioPlayer.delegate = self
-        if audioPlayer.duration > 0.0 {
-            audioPlayer.isMeteringEnabled = true
-            audioPlayer.play()
-            status = .playing
+        guard let player = try? AVAudioPlayer(contentsOf: urlForMemo) else {
+            audioPlayer = nil
+            engineAudioFile = nil
+            print("error playing audio")
+            return
         }
+        player.delegate = self
+        
+        if player.duration > 0.0 {
+            player.volume = 0
+            player.isMeteringEnabled = true
+            player.prepareToPlay()
+        }
+        audioPlayer = player
+        enginePlayer.scheduleFile(engineAudioFile, at: nil, completionHandler: nil)
+        enginePlayer.play()
+        audioPlayer?.play()
+        status = .playing
     }
     
     func stopPlayback() {
         audioPlayer?.stop()
+        enginePlayer.stop()
         status = .stopped
     }
     
