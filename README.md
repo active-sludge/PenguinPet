@@ -1,4 +1,4 @@
-<img src="ss-1.png" width="425"/> <img src="ss-2.png" width="425"/> 
+<img src="ss-1.png" width="200"/> <img src="ss-2.png" width="200"/> 
 
 Penguin pet is a simple voice changing app. 
 You record your voice then change the pitch and reverb properties and play it back.
